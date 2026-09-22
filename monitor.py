@@ -26,6 +26,24 @@ def get_system_metrics() -> dict:
         "load_average": get_load_average()
     }
 
+def get_processes() -> list[dict]:
+    processes = []
 
+    for process in psutil.process_iter(
+        ["pid", "name", "memory_percent", "cmdline"]
+    ):
+        processes.append(process.info)
+    
+    return processes
 
-print(get_system_metrics())
+def get_top_memory_processes(processes: list[dict], limit: int = 5) -> list[dict]:
+    sorted_processes = sorted(
+        processes,
+        key=lambda process: process["memory_percent"],
+        reverse=True
+    )
+
+    return sorted_processes[:limit]
+         
+processes = get_processes()
+print(get_top_memory_processes(processes))
