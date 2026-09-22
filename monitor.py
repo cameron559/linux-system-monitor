@@ -1,4 +1,5 @@
 import psutil
+import time
 
 def get_cpu_usage() -> float:
     return psutil.cpu_percent(interval=1)
@@ -17,4 +18,8 @@ def get_system_metrics() -> dict:
         "disk": get_disk_usage()
     }
 
+def get_uptime_seconds() -> float:
+    pass
+
 print(get_system_metrics())
+print(time)
